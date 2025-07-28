@@ -1,17 +1,17 @@
 from django.urls import path
-from .views import list_books
-from .views import (
-    home_redirect, LibraryDetailView,
-    register_view, login_view, logout_view
-)
+from django.contrib.auth.views import LoginView, LogoutView
+from . import views  # for views.register, list_books, etc.
 
 urlpatterns = [
-    path('', home_redirect),
-    path('books/', list_books, name='list_books'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    path('', views.home_redirect),
 
-  
-    path('register/', register_view, name='register'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
+    # Existing app views
+    path('books/', views.list_books, name='list_books'),
+    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
+
+    # ✅ Auth views
+    path('register/', views.register, name='register'),  # required: views.register
+
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
 ]
