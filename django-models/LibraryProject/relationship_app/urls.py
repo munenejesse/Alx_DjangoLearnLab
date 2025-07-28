@@ -1,6 +1,7 @@
 from django.urls import path
+from .views import list_books
 from .views import (
-    home_redirect, list_books, LibraryDetailView,
+    home_redirect, LibraryDetailView,
     register_view, login_view, logout_view
 )
 
